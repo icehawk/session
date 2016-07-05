@@ -8,7 +8,7 @@ namespace IceHawk\Session\Tests\Unit;
 use IceHawk\Session\Tests\Unit\Fixtures\DataMapper;
 use IceHawk\Session\Tests\Unit\Fixtures\Session;
 
-class SessionRegistryTest extends \PHPUnit_Framework_TestCase
+class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 {
 	public function testCanSetValue()
 	{

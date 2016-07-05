@@ -5,13 +5,13 @@
 
 namespace IceHawk\Session\Tests\Unit\Fixtures;
 
-use IceHawk\Session\SessionRegistry;
+use IceHawk\Session\AbstractSession;
 
 /**
  * Class Session
  * @package IceHawk\Session\Tests\Unit\Fixtures
  */
-final class Session extends SessionRegistry
+final class Session extends AbstractSession
 {
 	const UNIT_TEST_KEY = 'unitTestKey';
 

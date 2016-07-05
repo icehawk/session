@@ -8,9 +8,6 @@ vagrant
 vendor/
 composer.lock
 
-# tools
-build/tools/*.phar
-
 # locally generated docs
 build/api/
 build/phpdox/

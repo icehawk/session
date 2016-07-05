@@ -1,5 +1,10 @@
 VAGRANTFILE_API_VERSION = "2"
 
+$script = <<SCRIPT
+curl -sS 'https://getcomposer.org/installer' | php -- --install-dir=/usr/local/bin --filename=composer
+chmod +x /usr/local/bin/composer
+SCRIPT
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # box-config
@@ -18,5 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # hostname
   config.vm.hostname = "IceHawkSession"
+
+  config.vm.provision "shell", inline: $script
 
 end

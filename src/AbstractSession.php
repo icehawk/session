@@ -8,10 +8,10 @@ namespace IceHawk\Session;
 use IceHawk\Session\Interfaces\MapsSessionData;
 
 /**
- * Class SessionRegistry
+ * Class AbstractSession
  * @package IceHawk\Session
  */
-class SessionRegistry
+abstract class AbstractSession
 {
 	/** @var array */
 	private $sessionData;

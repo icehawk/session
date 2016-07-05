@@ -22,4 +22,4 @@ We accept contributions via pull requests on [GitHub](https://github.com/icehawk
 
 ## Running Tests
 
-    $ php build/tools/phpunit.phar -c build
+    $ vendor/bin/phpunit -c build/
