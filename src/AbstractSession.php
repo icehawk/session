@@ -1,6 +1,6 @@
 <?php
 /**
- * @author h.woltersdorf
+ * @author hollodotme
  */
 
 namespace IceHawk\Session;
@@ -17,34 +17,53 @@ abstract class AbstractSession
 	private $sessionData;
 
 	/** @var array|MapsSessionData[] */
-	private $dataMappers;
+	private $keyDataMappers;
+
+	/** @var array|MapsSessionData[] */
+	private $globalDataMappers;
 
 	public function __construct( array &$sessionData )
 	{
-		$this->sessionData = &$sessionData;
-		$this->dataMappers = [ ];
+		$this->sessionData       = &$sessionData;
+		$this->keyDataMappers    = [ ];
+		$this->globalDataMappers = [ ];
 	}
 
 	final public function addDataMapper( MapsSessionData $dataMapper, array $keys = [ ] )
 	{
 		if ( empty($keys) )
 		{
-			$keys = [ '*' ];
+			$this->addGlobalDataMapper( $dataMapper );
 		}
-
-		foreach ( array_unique( $keys ) as $key )
+		else
 		{
-			if ( isset($this->dataMappers[ $key ]) )
+			foreach ( array_unique( $keys ) as $key )
 			{
-				if ( !in_array( $dataMapper, $this->dataMappers[ $key ] ) )
-				{
-					$this->dataMappers[ $key ][] = $dataMapper;
-				}
+				$this->addKeyDataMapper( $dataMapper, $key );
 			}
-			else
+		}
+	}
+
+	private function addGlobalDataMapper( MapsSessionData $dataMapper )
+	{
+		if ( !in_array( $dataMapper, $this->globalDataMappers ) )
+		{
+			$this->globalDataMappers[] = $dataMapper;
+		}
+	}
+
+	private function addKeyDataMapper( MapsSessionData $dataMapper, string $key )
+	{
+		if ( isset($this->keyDataMappers[ $key ]) )
+		{
+			if ( !in_array( $dataMapper, $this->keyDataMappers[ $key ] ) )
 			{
-				$this->dataMappers[ $key ] = [ $dataMapper ];
+				$this->keyDataMappers[ $key ][] = $dataMapper;
 			}
+		}
+		else
+		{
+			$this->keyDataMappers[ $key ] = [ $dataMapper ];
 		}
 	}
 
@@ -55,27 +74,19 @@ abstract class AbstractSession
 
 	private function mapValueToSessionData( string $key, $value )
 	{
-		$mappers = $this->getDataMappersForKey( $key );
+		$keyDataMappers = $this->keyDataMappers[ $key ] ?? [ ];
 
-		foreach ( $mappers as $mapper )
+		foreach ( $keyDataMappers as $keyDataMapper )
 		{
-			$value = $mapper->toSessionData( $value );
+			$value = $keyDataMapper->toSessionData( $value );
+		}
+
+		foreach ( $this->globalDataMappers as $globalDataMapper )
+		{
+			$value = $globalDataMapper->toSessionData( $value );
 		}
 
 		return $value;
-	}
-
-	/**
-	 * @param string $key
-	 *
-	 * @return array|MapsSessionData[]
-	 */
-	private function getDataMappersForKey( string $key ) : array
-	{
-		$mappers = $this->dataMappers[ $key ] ?? [ ];
-		$mappers = array_merge( $mappers, $this->dataMappers['*'] ?? [ ] );
-
-		return $mappers;
 	}
 
 	final protected function get( string $key )
@@ -87,13 +98,20 @@ abstract class AbstractSession
 	{
 		if ( $this->isset( $key ) )
 		{
-			$value   = $this->sessionData[ $key ];
-			$mappers = $this->getDataMappersForKey( $key );
+			$value             = $this->sessionData[ $key ];
+			$globalDataMappers = array_reverse( $this->globalDataMappers );
+			$keyDataMappers    = array_reverse( $this->keyDataMappers[ $key ] ?? [ ] );
 
-			/** @var MapsSessionData $mapper */
-			foreach ( array_reverse( $mappers ) as $mapper )
+			/** @var MapsSessionData $globalDataMapper */
+			foreach ( $globalDataMappers as $globalDataMapper )
 			{
-				$value = $mapper->fromSessionData( $value );
+				$value = $globalDataMapper->fromSessionData( $value );
+			}
+
+			/** @var MapsSessionData $keyDataMapper */
+			foreach ( $keyDataMappers as $keyDataMapper )
+			{
+				$value = $keyDataMapper->fromSessionData( $value );
 			}
 
 			return $value;

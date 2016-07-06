@@ -1,6 +1,6 @@
 <?php
 /**
- * @author h.woltersdorf
+ * @author hollodotme
  */
 
 namespace IceHawk\Session\Tests\Unit;
