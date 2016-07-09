@@ -77,11 +77,23 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$session     = new Session( $sessionData );
 		$session->addDataMapper( new DataMapper( 'Globally ' ) );
 		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [ Session::UNIT_TEST_KEY ] );
+		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [ Session::UNIT_TEST_KEY ] );
 		$session->addDataMapper( new DataMapper( 'Check ' ) );
 
 		$session->setUnitTestValue( 'Unit-Test' );
 
 		$this->assertEquals( 'Check Globally Mapped: Unit-Test', $sessionData[ Session::UNIT_TEST_KEY ] );
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
+	}
+
+	public function testCanClearSession()
+	{
+		$sessionData = [ Session::UNIT_TEST_KEY => 'value' ];
+		$session     = new Session( $sessionData );
+
+		$session->clear();
+
+		$this->assertNull( $session->getUnitTestValue() );
+		$this->assertEmpty( $sessionData );
 	}
 }

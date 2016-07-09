@@ -76,6 +76,7 @@ abstract class AbstractSession
 	{
 		$keyDataMappers = $this->keyDataMappers[ $key ] ?? [ ];
 
+		/** @var MapsSessionData $keyDataMapper */
 		foreach ( $keyDataMappers as $keyDataMapper )
 		{
 			$value = $keyDataMapper->toSessionData( $value );
@@ -128,5 +129,10 @@ abstract class AbstractSession
 	final protected function unset( string $key )
 	{
 		unset($this->sessionData[ $key ]);
+	}
+
+	public function clear()
+	{
+		$this->sessionData = [ ];
 	}
 }
