@@ -1,6 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 /**
- * @author hollodotme
+ * Copyright (c) 2016 Holger Woltersdorf & Contributors
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  */
 
 namespace IceHawk\Session\Tests\Unit;
@@ -12,7 +20,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 {
 	public function testCanSetValue()
 	{
-		$sessionData = [ ];
+		$sessionData = [];
 		$session     = new Session( $sessionData );
 
 		$session->setUnitTestValue( 'Unit-Test' );
@@ -22,7 +30,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanGetValue()
 	{
-		$sessionData = [ Session::UNIT_TEST_KEY => 'Unit-Test' ];
+		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
 		$session     = new Session( $sessionData );
 
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
@@ -30,7 +38,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanCheckIfKeyIsset()
 	{
-		$sessionData = [ Session::UNIT_TEST_KEY => 'Unit-Test' ];
+		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
 		$session     = new Session( $sessionData );
 
 		$this->assertTrue( $session->issetUnitTestValue() );
@@ -38,7 +46,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanUnsetValue()
 	{
-		$sessionData = [ Session::UNIT_TEST_KEY => 'Unit-Test' ];
+		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
 		$session     = new Session( $sessionData );
 
 		$session->unsetUnitTestValue();
@@ -49,7 +57,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanMapAllValues()
 	{
-		$sessionData = [ ];
+		$sessionData = [];
 		$session     = new Session( $sessionData );
 		$session->addDataMapper( new DataMapper( 'Mapped: ' ) );
 
@@ -61,9 +69,9 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanMapSpecificValues()
 	{
-		$sessionData = [ ];
+		$sessionData = [];
 		$session     = new Session( $sessionData );
-		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [ Session::UNIT_TEST_KEY ] );
+		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [Session::UNIT_TEST_KEY] );
 
 		$session->setUnitTestValue( 'Unit-Test' );
 
@@ -73,11 +81,11 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testSpecificMappingHappensFirst()
 	{
-		$sessionData = [ ];
+		$sessionData = [];
 		$session     = new Session( $sessionData );
 		$session->addDataMapper( new DataMapper( 'Globally ' ) );
-		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [ Session::UNIT_TEST_KEY ] );
-		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [ Session::UNIT_TEST_KEY ] );
+		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [Session::UNIT_TEST_KEY] );
+		$session->addDataMapper( new DataMapper( 'Mapped: ' ), [Session::UNIT_TEST_KEY] );
 		$session->addDataMapper( new DataMapper( 'Check ' ) );
 
 		$session->setUnitTestValue( 'Unit-Test' );
@@ -88,7 +96,7 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 
 	public function testCanClearSession()
 	{
-		$sessionData = [ Session::UNIT_TEST_KEY => 'value' ];
+		$sessionData = [Session::UNIT_TEST_KEY => 'value'];
 		$session     = new Session( $sessionData );
 
 		$session->clear();
