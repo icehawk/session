@@ -1,6 +1,14 @@
-<?php
+<?php declare(strict_types = 1);
 /**
- * @author hollodotme
+ * Copyright (c) 2016 Holger Woltersdorf & Contributors
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  */
 
 namespace IceHawk\Session;
@@ -25,11 +33,11 @@ abstract class AbstractSession
 	public function __construct( array &$sessionData )
 	{
 		$this->sessionData       = &$sessionData;
-		$this->keyDataMappers    = [ ];
-		$this->globalDataMappers = [ ];
+		$this->keyDataMappers    = [];
+		$this->globalDataMappers = [];
 	}
 
-	final public function addDataMapper( MapsSessionData $dataMapper, array $keys = [ ] )
+	final public function addDataMapper( MapsSessionData $dataMapper, array $keys = [] )
 	{
 		if ( empty($keys) )
 		{
@@ -63,7 +71,7 @@ abstract class AbstractSession
 		}
 		else
 		{
-			$this->keyDataMappers[ $key ] = [ $dataMapper ];
+			$this->keyDataMappers[ $key ] = [$dataMapper];
 		}
 	}
 
@@ -74,7 +82,7 @@ abstract class AbstractSession
 
 	private function mapValueToSessionData( string $key, $value )
 	{
-		$keyDataMappers = $this->keyDataMappers[ $key ] ?? [ ];
+		$keyDataMappers = $this->keyDataMappers[ $key ] ?? [];
 
 		/** @var MapsSessionData $keyDataMapper */
 		foreach ( $keyDataMappers as $keyDataMapper )
@@ -101,7 +109,7 @@ abstract class AbstractSession
 		{
 			$value             = $this->sessionData[ $key ];
 			$globalDataMappers = array_reverse( $this->globalDataMappers );
-			$keyDataMappers    = array_reverse( $this->keyDataMappers[ $key ] ?? [ ] );
+			$keyDataMappers    = array_reverse( $this->keyDataMappers[ $key ] ?? [] );
 
 			/** @var MapsSessionData $globalDataMapper */
 			foreach ( $globalDataMappers as $globalDataMapper )
@@ -133,6 +141,6 @@ abstract class AbstractSession
 
 	public function clear()
 	{
-		$this->sessionData = [ ];
+		$this->sessionData = [];
 	}
 }

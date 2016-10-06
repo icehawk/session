@@ -1,3 +1,4 @@
+[![Join the chat at https://gitter.im/icehawk/session](https://badges.gitter.im/icehawk/session.svg)](https://gitter.im/icehawk/session?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/icehawk/session.svg?branch=master)](https://travis-ci.org/icehawk/session)
 [![Coverage Status](https://coveralls.io/repos/github/icehawk/session/badge.svg?branch=master)](https://coveralls.io/github/icehawk/session?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/icehawk/session/v/stable)](https://packagist.org/packages/icehawk/session) 
@@ -5,9 +6,11 @@
 [![Latest Unstable Version](https://poser.pugx.org/icehawk/session/v/unstable)](https://packagist.org/packages/icehawk/session) 
 [![License](https://poser.pugx.org/icehawk/session/license)](https://packagist.org/packages/icehawk/session)
 
+# ![IceHawk Framework](https://icehawk.github.io/images/Logo-Flying-Tail-White.png)
+
 # IceHawk\Session
 
-Session registry component for IceHawk framework
+Session registry component for the [IceHawk](https://github.com/icehawk/icehawk) framework.
 
 ## Intention
 
@@ -24,7 +27,7 @@ Furthermore it provides the registration and interfaces for data mappers on all,
 ```php
 <?php declare(strict_types=1);
 
-namespace Vendor\Project;
+namespace MyVendor\MyProject;
 
 use IceHawk\Session\AbstractSession;
 
@@ -59,7 +62,7 @@ final class Session extends AbstractSession
 ```php
 <?php declare(strict_types=1);
 
-namespace Vendor\Project;
+namespace MyVendor\MyProject;
 
 $session = new Session( $_SESSION );
 
@@ -78,3 +81,7 @@ if ( $session->isSomeStringValueSet() )
 # Unset 
 $session->unsetSomeStringValue();
 ```
+
+## Contributing
+
+Contributions are welcome! Please see our [Contribution guide](./CONTRIBUTING.md).
