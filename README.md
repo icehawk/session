@@ -82,6 +82,59 @@ if ( $session->isSomeStringValueSet() )
 $session->unsetSomeStringValue();
 ```
 
+### Data mapping
+
+```php
+<?php declare(strict_types=1);
+
+namespace MyVendor\MyProject;
+
+use IceHawk\Session\Interfaces\MapsSessionData;
+
+# Create a data mapper class
+final class MyDataMapper implements MapsSessionData
+{
+	public function toSessionData( $value ) 
+	{
+        return base64_encode( $value );
+	}
+	
+	public function fromSessionData( $sessionData ) 
+	{
+		return base64_decode( $sessionData );
+	}
+}
+
+$session = new Session( $_SESSION );
+
+# Add the data mapper for all keys in the registry
+$session->addDataMapper( new MyDataMapper() );
+
+# Add the data mapper for one specific key in the registry
+$session->addDataMapper( new MyDataMapper(), [Session::KEY_SOME_STRING_VALUE] );
+
+# Add the data mapper for multiple keys in the registry
+$session->addDataMapper( new MyDataMapper(), [Session::KEY_SOME_STRING_VALUE, Session::KEY_SOME_OTHER_VALUE] );
+```
+
+- The data mapper's `toSessionData()` is called when the `AbstractSesion::set()` method gets invoked.
+- The data mapper's `fromSessionData()` is called when the `AbstractSesion::get()` method gets invoked.
+
+### Clear all session data
+
+```php
+<?php declare(strict_types=1);
+
+namespace MyVendor\MyProject;
+
+$session = new Session( $_SESSION );
+
+# ... put some data to the session ...
+
+# Clear the session data
+$session->clear();
+```
+
 ## Contributing
 
 Contributions are welcome! Please see our [Contribution guide](./CONTRIBUTING.md).
