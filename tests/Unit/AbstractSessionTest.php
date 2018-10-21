@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2016 Holger Woltersdorf & Contributors
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -15,9 +15,14 @@ namespace IceHawk\Session\Tests\Unit;
 
 use IceHawk\Session\Tests\Unit\Fixtures\DataMapper;
 use IceHawk\Session\Tests\Unit\Fixtures\Session;
+use PHPUnit\Framework\TestCase;
 
-class AbstractSessionTest extends \PHPUnit_Framework_TestCase
+class AbstractSessionTest extends TestCase
 {
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanSetValue()
 	{
 		$sessionData = [];
@@ -28,6 +33,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'Unit-Test', $sessionData[ Session::UNIT_TEST_KEY ] );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanGetValue()
 	{
 		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
@@ -36,6 +45,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanCheckIfKeyIsset()
 	{
 		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
@@ -44,6 +57,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue( $session->issetUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanUnsetValue()
 	{
 		$sessionData = [Session::UNIT_TEST_KEY => 'Unit-Test'];
@@ -55,6 +72,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull( $session->getUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanMapAllValues()
 	{
 		$sessionData = [];
@@ -67,6 +88,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanMapSpecificValues()
 	{
 		$sessionData = [];
@@ -79,6 +104,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testSpecificMappingHappensFirst()
 	{
 		$sessionData = [];
@@ -94,6 +123,10 @@ class AbstractSessionTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals( 'Unit-Test', $session->getUnitTestValue() );
 	}
 
+	/**
+	 * @throws \PHPUnit\Framework\ExpectationFailedException
+	 * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+	 */
 	public function testCanClearSession()
 	{
 		$sessionData = [Session::UNIT_TEST_KEY => 'value'];
