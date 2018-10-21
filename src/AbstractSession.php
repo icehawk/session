@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 /**
  * Copyright (c) 2016 Holger Woltersdorf & Contributors
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -14,6 +14,7 @@
 namespace IceHawk\Session;
 
 use IceHawk\Session\Interfaces\MapsSessionData;
+use function in_array;
 
 /**
  * Class AbstractSession
@@ -24,10 +25,10 @@ abstract class AbstractSession
 	/** @var array */
 	private $sessionData;
 
-	/** @var array|MapsSessionData[] */
+	/** @var array */
 	private $keyDataMappers;
 
-	/** @var array|MapsSessionData[] */
+	/** @var array */
 	private $globalDataMappers;
 
 	public function __construct( array &$sessionData )
@@ -39,7 +40,7 @@ abstract class AbstractSession
 
 	final public function addDataMapper( MapsSessionData $dataMapper, array $keys = [] )
 	{
-		if ( empty($keys) )
+		if ( empty( $keys ) )
 		{
 			$this->addGlobalDataMapper( $dataMapper );
 		}
@@ -54,7 +55,7 @@ abstract class AbstractSession
 
 	private function addGlobalDataMapper( MapsSessionData $dataMapper )
 	{
-		if ( !in_array( $dataMapper, $this->globalDataMappers ) )
+		if ( !in_array( $dataMapper, $this->globalDataMappers, false ) )
 		{
 			$this->globalDataMappers[] = $dataMapper;
 		}
@@ -62,9 +63,9 @@ abstract class AbstractSession
 
 	private function addKeyDataMapper( MapsSessionData $dataMapper, string $key )
 	{
-		if ( isset($this->keyDataMappers[ $key ]) )
+		if ( isset( $this->keyDataMappers[ $key ] ) )
 		{
-			if ( !in_array( $dataMapper, $this->keyDataMappers[ $key ] ) )
+			if ( !in_array( $dataMapper, $this->keyDataMappers[ $key ], false ) )
 			{
 				$this->keyDataMappers[ $key ][] = $dataMapper;
 			}
@@ -131,12 +132,12 @@ abstract class AbstractSession
 
 	final protected function isset( string $key ) : bool
 	{
-		return isset($this->sessionData[ $key ]);
+		return isset( $this->sessionData[ $key ] );
 	}
 
 	final protected function unset( string $key )
 	{
-		unset($this->sessionData[ $key ]);
+		unset( $this->sessionData[ $key ] );
 	}
 
 	public function clear()

@@ -5,6 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/icehawk/session/downloads)](https://packagist.org/packages/icehawk/session) 
 [![Latest Unstable Version](https://poser.pugx.org/icehawk/session/v/unstable)](https://packagist.org/packages/icehawk/session) 
 [![License](https://poser.pugx.org/icehawk/session/license)](https://packagist.org/packages/icehawk/session)
+[![phpstan enabled](https://img.shields.io/badge/phpstan-enabled-green.svg)](https://github.com/phpstan/phpstan)
 
 # ![IceHawk Framework](https://icehawk.github.io/images/Logo-Flying-Tail-White.png)
 
